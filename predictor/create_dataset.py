@@ -14,8 +14,9 @@ def create_folder() -> None:
     Config.RAW_DATASET_FILE_PATH.parent.mkdir(parents=True, exist_ok=True)
     Config.DATASET_PATH.mkdir(parents=True, exist_ok=True)
     Config.FEATURES_PATH.mkdir(parents=True, exist_ok=True)
+    Config.MODELS_PATH.mkdir(parents=True, exist_ok=True)
 
-    logger.info('Creating %s', Config.DATASET_PATH)
+    logger.info('Creating of folders is finished.')
 
 def read_raw_data() -> pd.DataFrame:
     dataframe_raw = pd.read_excel(str(Config.RAW_DATASET_FILE_PATH))

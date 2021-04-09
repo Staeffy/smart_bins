@@ -35,7 +35,7 @@ def train_test_split(use_case_dataframe: pd.DataFrame):
     testX = Variable(torch.Tensor(np.array(x_variable[train_size:len(x_variable)])))
     testY = Variable(torch.Tensor(np.array(y_variable[train_size:len(y_variable)])))
 
-    save_train_test_splits(dataX, dataY, trainX, trainY, testX, testY, x_variable)
+    save_train_test_splits(dataX, dataY, trainX, trainY, testX, testY)
     logger.info('Train and test split is finsihed and saved.')
 
 def main() -> None:

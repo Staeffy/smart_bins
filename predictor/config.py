@@ -16,6 +16,8 @@ class Config:
 
 
     MODELS_PATH = ASSETS_PATH / 'models'
+    MODEL_NAME = 'lstm_model.pt'
+    MODEL_FILE_PATH = MODELS_PATH / MODEL_NAME
     METRICS_FILE_PATH = ASSETS_PATH / 'metrics.json'
 
     # Data Preprocessing

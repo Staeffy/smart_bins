@@ -9,18 +9,11 @@ import torch.tensor as tensor
 
 def read_features() -> Tuple[torch.Tensor, torch.Tensor]:
 
-    
-    for item_number, tensor in enumerate(torch.load(str(Config.TRAIN_FILE_PATH))):
-
-        if item_number == 0:
-            train_X = tensor
-        elif item_number == 1:
-            train_Y = tensor
-
     loaded = torch.load(str(Config.TRAIN_FILE_PATH))
+    train_X = loaded['train_X']
+    train_Y = loaded['train_Y']
 
-    return train_X, train_Y   
-
+    return train_X, train_Y
 
 
 def trainer_main() -> None:
@@ -29,11 +22,9 @@ def trainer_main() -> None:
     number_of_layers = int(Config.NUMBER_OF_LAYERS)
     input_size = int(Config.INPUT_SIZE)
     hidden_size = int(Config.HIDDEN_SIZE)
-    sequence_length = int(Config.SEQ_LENGTH)
 
     train_X, train_Y = read_features()
     lstm = LSTM(number_of_classes, input_size, hidden_size, number_of_layers)
-    logger.info(type(train_X))
 
     criterion = torch.nn.MSELoss()
     optimizer = torch.optim.Adam(lstm.parameters(), lr=int(Config.LEARNING_RATE))
@@ -48,7 +39,9 @@ def trainer_main() -> None:
         
         optimizer.step()
         if epoch % 100 == 0:
-            print("Epoch: %d, loss: %1.5f" % (epoch, loss.item()))
+            logger.info("Epoch: %d, loss: %1.5f" % (epoch, loss.item()))
+    
+    torch.save(lstm, Config.MODELS_PATH)
 
 if __name__ == '__main__':
     global logger
