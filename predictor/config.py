@@ -3,7 +3,9 @@ from pathlib import Path
 class Config:
     RANDOM_SEED = 42
     ASSETS_PATH = Path('./assets')
+    # ***** Here file name for Excel Sheet *****
     RAW_DATASET_FILE_PATH = ASSETS_PATH / 'raw_dataset' / 'Smart-Bins-Messwerte(1).xlsx'
+    # ************ ***************
     DATASET_PATH = ASSETS_PATH / 'data'
     CSV_DATASET_FILE_PATH = DATASET_PATH / 'smart_bins.csv'
     CLEANED_DATASET_FILE_PATH = DATASET_PATH / 'dataframe_cleaned.csv'
@@ -12,13 +14,16 @@ class Config:
     TRAIN_FILE_PATH = FEATURES_PATH / 'train_X_Y.pt'
     TEST_FILE_PATH = FEATURES_PATH / 'test_X_Y.pt'
     PREDICT_FILE_PATH = FEATURES_PATH / 'predict_X_Y.pt'
-    X_VARIABLE_FILE_PATH = FEATURES_PATH / 'x_variable.pt'
-
-
     MODELS_PATH = ASSETS_PATH / 'models'
     MODEL_NAME = 'lstm_model.pt'
     MODEL_FILE_PATH = MODELS_PATH / MODEL_NAME
-    METRICS_FILE_PATH = ASSETS_PATH / 'metrics.json'
+    RESULTS_PATH = ASSETS_PATH / 'results'
+    METRICS_PATH = RESULTS_PATH / 'metrics'
+    METRICS_FILE_PATH = METRICS_PATH / 'metrics.json'
+
+    PLOT_PATH = RESULTS_PATH / 'plots'
+    PLOT_FILE_PATH = PLOT_PATH / 'forecast.png'
+
 
     # Data Preprocessing
     SEQ_LENGTH = 4

@@ -27,26 +27,28 @@ def trainer_main() -> None:
     lstm = LSTM(number_of_classes, input_size, hidden_size, number_of_layers)
 
     criterion = torch.nn.MSELoss()
-    optimizer = torch.optim.Adam(lstm.parameters(), lr=int(Config.LEARNING_RATE))
+    optimizer = torch.optim.Adam(lstm.parameters(), lr=float(Config.LEARNING_RATE))
 
     for epoch in range(int(Config.NUMBER_EPOCHS)):
         outputs = lstm(train_X)
         optimizer.zero_grad()
         
         loss = criterion(outputs, train_Y)
-        
         loss.backward()
-        
+       
         optimizer.step()
         if epoch % 100 == 0:
             logger.info("Epoch: %d, loss: %1.5f" % (epoch, loss.item()))
     
-    torch.save(lstm, Config.MODELS_PATH)
+    torch.save(dict(model=lstm,model_state=lstm.state_dict()), 
+          str(Config.MODEL_FILE_PATH))
+
+    #torch.save(lstm, Config.MODEL_FILE_PATH)
 
 if __name__ == '__main__':
     global logger
     logging.basicConfig(level = logging.DEBUG, filemode='a')
-    file_handler = logging.FileHandler('log/create_features.log')
-    logger = logging.getLogger('log_file')
+    file_handler = logging.FileHandler('log/lstm_trainer.log')
+    logger = logging.getLogger('lstm_log_file')
     logger.addHandler(file_handler)
     trainer_main()

@@ -15,6 +15,9 @@ def create_folder() -> None:
     Config.DATASET_PATH.mkdir(parents=True, exist_ok=True)
     Config.FEATURES_PATH.mkdir(parents=True, exist_ok=True)
     Config.MODELS_PATH.mkdir(parents=True, exist_ok=True)
+    Config.RESULTS_PATH.mkdir(parents=True, exist_ok=True)
+    Config.PLOT_PATH.mkdir(parents=True, exist_ok=True)
+    Config.METRICS_PATH.mkdir(parents=True, exist_ok=True)
 
     logger.info('Creating of folders is finished.')
 

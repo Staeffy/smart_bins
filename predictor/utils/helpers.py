@@ -13,6 +13,11 @@ def read_tensors(path_tensors: str) -> Tuple[torch.Tensor, torch.Tensor]:
 
     return tensor_X, tensor_Y
 
+def r2_score(target, prediction):
+
+    r2 = 1- torch.sum((target-prediction)**2) / torch.sum((target-target.float().mean())**2)
+    return r2
+
 def remove_duplicate(dataframe: pd.DataFrame) -> pd.DataFrame:
     """Function for removing duplicates from dataframe.
 

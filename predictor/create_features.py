@@ -23,7 +23,7 @@ def train_test_split(use_case_dataframe: pd.DataFrame):
     seq_length = int(Config.SEQ_LENGTH)
     x_variable, y_variable = sliding_windows(training_data, seq_length)
 
-    train_size = int(len(y_variable) * 0.80)
+    train_size = int(len(y_variable) * 0.67)
     test_size = len(y_variable) - train_size
 
     dataX = Variable(torch.Tensor(np.array(x_variable)))

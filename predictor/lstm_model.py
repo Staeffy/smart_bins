@@ -23,8 +23,6 @@ class LSTM(nn.Module):
 
     def forward(self, x):
 
-        #x = torch.load(str(Config.X_VARIABLE_FILE_PATH))
-
         h_0 = Variable(torch.zeros(
             self.number_of_layers, x.size(0), self.hidden_size))
         
@@ -34,6 +32,7 @@ class LSTM(nn.Module):
         # Propagate input through LSTM
         ula, (h_out, _) = self.lstm(x, (h_0, c_0))        
         h_out = h_out.view(-1, self.hidden_size)        
-        output = self.fc(h_out)
+        out = self.fc(h_out)
 
-        return output
+        return out
+    
