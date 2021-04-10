@@ -1,3 +1,4 @@
+""" Performing feature extraction for model training."""
 import torch
 import logging
 import warnings
@@ -9,12 +10,24 @@ from torch.autograd import Variable
 from sklearn.preprocessing import MinMaxScaler
 
 def read_use_case_dataframe() -> pd.DataFrame:
+    """Read use case dataframe from config path.
+
+    Returns:
+        pd.DataFrame: Returns the use case dataframe.
+    """
     logger.info(str(Config.USE_CASE_PREPARATION_DATASET_FILE_PATH))
     use_case_dataframe = pd.read_csv(str(Config.USE_CASE_PREPARATION_DATASET_FILE_PATH), delimiter=",", index_col=[0])
     logger.info('Reading use case dataframe.')
     return use_case_dataframe
 
 def train_test_split(use_case_dataframe: pd.DataFrame):
+    """Function for applying MinMax Scaling for dataset. Furthermore, it performs
+    the transformation of the data into a sequence with a sliding window.
+    Finally, it performs a train test split.
+
+    Args:
+        use_case_dataframe (pd.DataFrame): Use case dataframe from the create_dataset.py
+    """
 
     sc = MinMaxScaler()
     training_set = use_case_dataframe.iloc[:,1:2].values
@@ -39,6 +52,8 @@ def train_test_split(use_case_dataframe: pd.DataFrame):
     logger.info('Train and test split is finsihed and saved.')
 
 def main() -> None:
+    """Main function to call the feature extraction.
+    """
     use_case_dataframe = read_use_case_dataframe()
     train_test_split(use_case_dataframe)
 
