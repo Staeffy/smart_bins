@@ -68,7 +68,7 @@ python lstm_trainer.py
 ### 5. Step: Evaluate the results.
 
 ```
-python lstm_evaluate_model
+python lstm_evaluate_model.py
 ```
 ## Contributing
 
