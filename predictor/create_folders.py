@@ -4,6 +4,8 @@ from config import Config
 
 
 def create_folder() -> None:
+    """Function to create folder structure.
+    """
     Config.RAW_DATASET_FILE_PATH.parent.mkdir(parents=True, exist_ok=True)
     Config.DATASET_PATH.mkdir(parents=True, exist_ok=True)
     Config.FEATURES_PATH.mkdir(parents=True, exist_ok=True)

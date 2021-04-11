@@ -1,4 +1,4 @@
-""" Creates data set for performing feature extraction.""""
+""" Creates data set for performing feature extraction."""
 import logging
 import numpy as np
 import pandas as pd

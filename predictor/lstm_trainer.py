@@ -1,3 +1,4 @@
+"""Module for performing the training of LSTM model."""
 import logging
 import torch
 from config import Config
@@ -8,6 +9,11 @@ import numpy as np
 import torch.tensor as tensor
 
 def read_features() -> Tuple[torch.Tensor, torch.Tensor]:
+    """Function for reading the torch tensor.
+
+    Returns:
+        Tuple[torch.Tensor, torch.Tensor]: Return tensors from training set.
+    """
 
     loaded = torch.load(str(Config.TRAIN_FILE_PATH))
     train_X = loaded['train_X']
@@ -17,6 +23,8 @@ def read_features() -> Tuple[torch.Tensor, torch.Tensor]:
 
 
 def trainer_main() -> None:
+    """Trainer main function.
+    """
 
     number_of_classes = int(Config.NUMBER_OF_CLASSES)
     number_of_layers = int(Config.NUMBER_OF_LAYERS)

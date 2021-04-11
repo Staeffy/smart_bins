@@ -1,3 +1,4 @@
+""" LSTM Evaluator."""
 import logging
 import json
 import pandas as pd
@@ -6,9 +7,21 @@ from sklearn.metrics import mean_squared_error
 from utils.helpers import read_tensors, r2_score
 from config import Config
 import matplotlib.pyplot as plt
+import numpy as np
+from typing import Tuple
 from sklearn.preprocessing import MinMaxScaler
 
-def calculate_metrics(model, test_X, test_Y):
+def calculate_metrics(model: object, test_X: torch.tensor, test_Y: torch.tensor):
+    """Function to calcuate the model metrics.
+
+    Args:
+        model (object): Model to calcuate the metrics.
+        float ([torch.Tensor]): Torch tensor with the test data.
+        float ([torch.Tensor]): Torch tensor with the target test data.
+
+    Returns:
+        Tuple[float, float, float]: Mse, rmse and r2 values. 
+    """
     model.eval()
     criterion = torch.nn.MSELoss()
     outputs = model(test_X)
@@ -24,7 +37,12 @@ def calculate_metrics(model, test_X, test_Y):
     
     return mse, rmse, r2
 
-def perform_save_metrics(model):
+def perform_save_metrics(model: object) -> None:
+    """Function to load the model and performing the calculation of metrics.
+
+    Args:
+        model (object): Model for performing the calculations.
+    """
     test_X, test_Y = read_tensors(str(Config.TEST_FILE_PATH))
     mse_test, rmse_test, r2_test = calculate_metrics(model, test_X, test_Y)
 
@@ -39,8 +57,12 @@ def perform_save_metrics(model):
                         mse_test=mse_test,
                         rmse_test=rmse_test), metric_file)
 
-def load_model():
+def load_model() -> object:
+    """Function for loading the model.
 
+    Returns:
+        object: Returns the model for the inferecing.
+    """
     checkpoint = torch.load(str(Config.MODEL_FILE_PATH))
     model = checkpoint['model']
     model.load_state_dict(checkpoint['model_state'])
@@ -49,8 +71,12 @@ def load_model():
     logger.info('Model is loaded')
     return model
 
-def create_forecast_plot(model):
+def create_forecast_plot(model: object) -> None:
+    """Function for creating the forecast plots.
 
+    Args:
+        model (object): Model for performing inferencing.
+    """
     model.eval()
     predict_X, predict_Y = read_tensors(str(Config.PREDICT_FILE_PATH))
     train_predict = model(predict_X)
@@ -73,14 +99,16 @@ def create_forecast_plot(model):
     plt.savefig(str(Config.PLOT_FILE_PATH), dpi=200)
     logger.info('Forecast plot is created.')
 
-def main_evaluate():
+def main_evaluate() -> None:
+    """Function for calling the other services.
+    """
     model = load_model()
     create_forecast_plot(model)
     perform_save_metrics(model)
 
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':    
     global logger
     logging.basicConfig(level = logging.DEBUG, filemode='a')
     file_handler = logging.FileHandler('log/evlaluate_model.log')

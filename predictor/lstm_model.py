@@ -1,3 +1,4 @@
+"""Set up module for LSTM forecast."""
 import torch
 import torch.nn as nn
 from torch.autograd import Variable
@@ -5,8 +6,14 @@ from sklearn.preprocessing import MinMaxScaler
 from config import Config
 
 class LSTM(nn.Module):
+    """Class for automated forecast."""
 
-    def __init__(self, number_of_classes, input_size, hidden_size, number_of_layers) -> None:
+    def __init__(   self,
+                    number_of_classes: int,
+                    input_size: int,
+                    hidden_size: int,
+                    number_of_layers: int) -> None:
+        """Initlializing method."""
         
         super(LSTM, self).__init__()
         
@@ -21,7 +28,17 @@ class LSTM(nn.Module):
         
         self.fc = nn.Linear(hidden_size, number_of_classes)
 
-    def forward(self, x):
+    def forward(self, x: torch.tensor) -> torch.tensor:
+        """Inferencing from model.
+
+        Args:
+            x (torch.tensor): Batches or samples for
+            training and inference.
+
+        Returns:
+            torch.tensor: Predictions.
+        """
+
 
         h_0 = Variable(torch.zeros(
             self.number_of_layers, x.size(0), self.hidden_size))
