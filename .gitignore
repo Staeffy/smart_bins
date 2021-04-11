@@ -1,0 +1,7 @@
+# untracked folders
+*/assets/
+/tb_logs
+.vscode/
+test/
+*/log/
+*/__pycache__
