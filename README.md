@@ -14,6 +14,7 @@ The LSTM model architecture achieves the following results on the test set:
 Plot of the forecast:
 
 Blue: Ground Truth
+
 Orange: Predictions
 
 ![Screenshot](forecast.png)
