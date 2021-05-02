@@ -5,7 +5,8 @@ stages:
       - predictor/create_folders.py
       - predictor/config.py
   get_data:
-    cmd: dvc pull predictor/assets/raw_dataset
+    cmd: dvc pull predictor/assets/raw_dataset predictor/assets/data.dvc
+
   prepare_data:
     cmd: python3 predictor/create_dataset.py
     deps:
@@ -15,15 +16,15 @@ stages:
   train:
     cmd: python3 predictor/lstm_trainer.py
     deps:
-    - predictor/lstm_trainer.py
-    - predictor/assets/data
-    - predictor/assets/features
+      - predictor/lstm_trainer.py
+      - predictor/assets/data
+      - predictor/assets/features
 
   eval:
     cmd: python3 predictor/lstm_evaluate_model.py
     deps:
-    - predictor/assets/models/lstm_model.pt
-    - predictor/lstm_evaluate_model.py
+      - predictor/assets/models/lstm_model.pt
+      - predictor/lstm_evaluate_model.py
     metrics:
     - predictor/assets/results/metrics/metrics.json:
         cache: false

@@ -19,7 +19,7 @@ stages:
       md5: 342541354308edbb59f3ed2c4503ca09
       size: 925
   get_data:
-    cmd: dvc pull predictor/assets/raw_dataset
+    cmd: dvc pull predictor/assets/raw_dataset predictor/assets/data.dvc
   prepare_data:
     cmd: python3 predictor/create_dataset.py
     deps:
