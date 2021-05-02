@@ -1,0 +1,18 @@
+name: model-smart-bins
+on: [push]
+jobs:
+  run:
+    runs-on: [ubuntu-latest]
+    # optionally use a convenient Ubuntu LTS + CUDA + DVC + CML image
+    container: docker://dvcorg/cml-py3:latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Train model
+        run: |
+          # Your ML workflow goes here
+          pip install -r requirements.txt
+          python lstm_trainer.py
+          python lstm_evaluate_model.py
+
+          echo "MODEL METRICS"
+          cat predictor/assets/results/metrics.json
