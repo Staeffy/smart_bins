@@ -14,6 +14,11 @@ jobs:
           python lstm_trainer.py
           python lstm_evaluate_model.py
 
-          echo "MODEL METRICS"
-          cat predictor/assets/results/metrics.json
+          echo "## Model Metrics" > report.md
+          cat ./predictor/assets/results/metrics/metrics.json >> report.md
+
+          echo "## Data viz" >> report.md
+          cml-publish ./predictor/assets/results/plots/forecast.png --md >>report.md
+
+          cml-send-comment report.md
 
