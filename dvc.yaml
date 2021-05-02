@@ -1,0 +1,38 @@
+stages: 
+  prepare_folders:
+    cmd: python3 predictor/create_folders.py
+    deps: 
+      - predictor/create_folders.py
+      - predictor/config.py
+  get_data:
+    cmd: dvc pull predictor/assets/raw_dataset predictor/assets/data.dvc
+
+  prepare_data:
+    cmd: python3 predictor/create_dataset.py
+    deps:
+      - predictor/assets/raw_dataset/Smart-Bins-Messwerte.xlsx
+      - predictor/create_dataset.py
+      - predictor/config.py
+  train:
+    cmd: python3 predictor/lstm_trainer.py
+    deps:
+      - predictor/lstm_trainer.py
+      - predictor/assets/data
+      - predictor/assets/features
+
+  eval:
+    cmd: python3 predictor/lstm_evaluate_model.py
+    deps:
+      - predictor/assets/models/lstm_model.pt
+      - predictor/lstm_evaluate_model.py
+    metrics:
+    - predictor/assets/results/metrics/metrics.json:
+        cache: false
+    
+    outs:
+    - predictor/assets/results/plots/forecast.png
+
+
+
+
+

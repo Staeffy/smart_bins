@@ -1,0 +1,64 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python3 predictor/create_folders.py
+    deps:
+    - path: predictor/config.py
+      md5: fc83868b82bc91774b18ee499b0496b8
+      size: 1285
+    - path: predictor/create_folders.py
+      md5: 342541354308edbb59f3ed2c4503ca09
+      size: 925
+  prepare_folders:
+    cmd: python3 predictor/create_folders.py
+    deps:
+    - path: predictor/config.py
+      md5: 9f64f742af928da3c43d4ff771894587
+      size: 1293
+    - path: predictor/create_folders.py
+      md5: 342541354308edbb59f3ed2c4503ca09
+      size: 925
+  get_data:
+    cmd: dvc pull predictor/assets/raw_dataset predictor/assets/data.dvc
+  prepare_data:
+    cmd: python3 predictor/create_dataset.py
+    deps:
+    - path: predictor/assets/raw_dataset/Smart-Bins-Messwerte.xlsx
+      md5: fb3774d6b38f7a48fb3b0cc23b60ee7f
+      size: 6711582
+    - path: predictor/config.py
+      md5: 9f64f742af928da3c43d4ff771894587
+      size: 1293
+    - path: predictor/create_dataset.py
+      md5: 3011795f10727d3ef5b0b547b73d5565
+      size: 4286
+  train:
+    cmd: python3 predictor/lstm_trainer.py
+    deps:
+    - path: predictor/assets/data
+      md5: f4ea44e1e778f687d1822c95d4e34b81.dir
+      size: 38449583
+      nfiles: 3
+    - path: predictor/assets/features
+      md5: 048f0b02de970a142cc9640de6e7fac3.dir
+      size: 383625
+      nfiles: 3
+    - path: predictor/lstm_trainer.py
+      md5: bc5ce6827173394c68716b139dfeca3e
+      size: 1846
+  eval:
+    cmd: python3 predictor/lstm_evaluate_model.py
+    deps:
+    - path: predictor/assets/models/lstm_model.pt
+      md5: 8fc29631156c5681048b1cbfefd604d6
+      size: 4075
+    - path: predictor/lstm_evaluate_model.py
+      md5: f6be0c9e5fc43d34be411988ff4b6033
+      size: 3669
+    outs:
+    - path: predictor/assets/results/metrics/metrics.json
+      md5: 92ccc77e9d974d7612b87fb1c55269df
+      size: 213
+    - path: predictor/assets/results/plots/forecast.png
+      md5: 0b3d045feb3023b9387cee2014af6195
+      size: 7137
