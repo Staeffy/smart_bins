@@ -11,14 +11,17 @@ jobs:
         run: |
           # Your ML workflow goes here
           pip install -r requirements.txt
-          python lstm_trainer.py
-          python lstm_evaluate_model.py
+          dvc repro 
+    
+          git fetch --prune
+          dvc metrics diff --show-md master > report.md
 
           echo "## Model Metrics" > report.md
-          cat ./predictor/assets/results/metrics/metrics.json >> report.md
+          cat predictor/assets/results/metrics/metrics.json >> report.md
 
-          echo "## Data viz" >> report.md
-          cml-publish ./predictor/assets/results/plots/forecast.png --md >>report.md
+          # Add figure
+          echo "## Forecast" >> report.md
+          cml-publish predictor/assets/results/plots/forecast.png --md >>report.md
 
           cml-send-comment report.md
 
