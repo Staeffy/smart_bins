@@ -1,7 +1,14 @@
 # untracked folders
-*/assets/
+
 /tb_logs
 .vscode/
 test/
 */log/
 */__pycache__
+
+data
+features
+models
+raw_dataset
+
+
